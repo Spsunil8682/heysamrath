@@ -4,6 +4,9 @@ import { ServiceForm } from "@/components/admin/service-form";
 import { ErrorState } from "@/components/ui/states";
 import { requireAdmin } from "@/lib/auth/admin";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Edit service" };
 
 export default async function EditServicePage({ params }: { params: Promise<{ id: string }> }) {

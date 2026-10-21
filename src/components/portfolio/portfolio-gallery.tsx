@@ -2,14 +2,13 @@
 
 import { Eye, Play } from "lucide-react";
 import { useState } from "react";
-import { portfolioCategories } from "@/lib/config/site";
+import { categoryLabel } from "@/lib/config/site";
 import { tileImageUrl } from "@/lib/media";
 import type { PortfolioDisplayItem } from "@/lib/types/database";
 import { cn } from "@/lib/utils/cn";
 import { MediaImage } from "./media-image";
 import { PortfolioViewer } from "./portfolio-viewer";
 
-export const categoryLabel = (value: string) => portfolioCategories.find((c) => c.value === value)?.label ?? value;
 
 /**
  * layout="feature": the first tile is tall (spans two rows), which suits vertical reels and fills

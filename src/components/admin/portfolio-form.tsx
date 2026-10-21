@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { savePortfolioItem } from "@/app/admin/_actions/portfolio";
+import { CloudinaryUpload } from "@/components/admin/cloudinary-upload";
 import { FormStatus } from "@/components/admin/form-status";
 import { MediaImage } from "@/components/portfolio/media-image";
 import { Button, buttonClass } from "@/components/ui/button";
@@ -57,6 +58,13 @@ export function PortfolioForm({ item }: { item?: PortfolioItem }) {
             <Input id="eventDate" name="eventDate" type="date" defaultValue={item?.event_date ?? ""} />
           </Field>
         </div>
+        <CloudinaryUpload
+          onUploaded={(r) => {
+            setMediaType(r.mediaType);
+            setMediaUrl(r.mediaUrl);
+            setThumb(r.posterUrl ?? "");
+          }}
+        />
         <Field id="mediaUrl" label={mediaType === "video" ? "Video URL" : "Image URL"} required error={fe.mediaUrl} hint={mediaHint}>
           <Input id="mediaUrl" name="mediaUrl" value={mediaUrl} onChange={(e) => setMediaUrl(e.target.value)} required aria-invalid={!!mediaUrl && !isAllowedMediaUrl(mediaUrl)} />
         </Field>

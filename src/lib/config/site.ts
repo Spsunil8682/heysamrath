@@ -53,6 +53,8 @@ export const portfolioCategories = [
   { value: "photography", label: "Photography" },
 ] as const;
 
+export const categoryLabel = (value: string) => portfolioCategories.find((c) => c.value === value)?.label ?? value;
+
 export const budgetRanges = [
   "Under ₹25,000",
   "₹25,000 – ₹50,000",

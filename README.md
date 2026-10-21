@@ -40,7 +40,7 @@ Without the Supabase values, pages still render. They show honest "unavailable" 
    3. `20261010000003_security.sql`: grants and Row Level Security policies
 
    Alternatively, with the [Supabase CLI](https://supabase.com/docs/guides/cli): `npx supabase link --project-ref <ref>` and then `npx supabase db push`.
-3. **Load the starter content (optional):** run `supabase/seed.sql`. This adds six services with no prices ("Price on request") and the four portfolio videos in `public/media`.
+3. **Load the starter content:** run `supabase/seed.sql`. This adds the seven reel services (from ₹1,500 each) and your WhatsApp number. Portfolio videos come from `public/media` automatically and are not in the database.
 4. **Copy the API values** from **Project Settings → API Keys** into `.env.local`:
    - `NEXT_PUBLIC_SUPABASE_URL`: the project URL.
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: the **publishable** key (`sb_publishable_…`).
@@ -55,11 +55,13 @@ Admin rights live in `public.profiles.role`. No API path can change them. Users 
 2. In **SQL Editor** (which runs as the database owner), run:
 
    ```sql
-   update public.profiles
-   set role = 'admin'
-   where id = (select id from auth.users where email = 'you@example.com');
-   -- Expect: UPDATE 1
+   insert into public.profiles (id, role)
+   select id, 'admin' from auth.users where email = 'you@example.com'
+   on conflict (id) do update set role = 'admin';
    ```
+
+   The dashboard prints "Success. No rows returned" either way. Check it worked with
+   `select u.email, p.role from auth.users u left join public.profiles p on p.id = u.id;`. Your email should show `admin`.
 
 3. Sign in at `/admin/login`.
 

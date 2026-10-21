@@ -9,6 +9,9 @@ import { getAllServices, getBusinessToday } from "@/lib/data/admin";
 import type { BookingStatus } from "@/lib/types/database";
 import { formatDateOnly, formatDateTime, formatTime } from "@/lib/utils/format";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Overview" };
 
 const STATUSES: BookingStatus[] = ["pending", "confirmed", "cancelled", "rejected", "completed"];

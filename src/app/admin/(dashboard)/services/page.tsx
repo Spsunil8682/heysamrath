@@ -8,6 +8,9 @@ import { requireAdmin } from "@/lib/auth/admin";
 import { getAllServices } from "@/lib/data/admin";
 import { formatDuration, formatPrice } from "@/lib/utils/format";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Services" };
 
 export default async function AdminServicesPage() {

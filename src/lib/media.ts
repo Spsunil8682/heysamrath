@@ -19,9 +19,13 @@ export function isAllowedMediaUrl(url: string | null | undefined): url is string
   return CLOUDINARY_RE.test(url);
 }
 
+/** Formats most browsers can't display (iPhone photos); Cloudinary converts them when asked for .jpg. */
+const NON_WEB_IMAGE_RE = /(\/image\/upload\/.+)\.(heic|heif|tiff?)$/i;
+
 export function resolveMedia(url: string | null | undefined): MediaSource | null {
   if (!isAllowedMediaUrl(url)) return null;
-  return { url, provider: url.startsWith("/") ? "local" : "cloudinary" };
+  if (url.startsWith("/")) return { url, provider: "local" };
+  return { url: url.replace(NON_WEB_IMAGE_RE, "$1.jpg"), provider: "cloudinary" };
 }
 
 /**

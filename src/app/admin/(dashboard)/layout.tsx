@@ -1,5 +1,6 @@
 import { ExternalLink, LogOut } from "lucide-react";
 import Link from "next/link";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { signOut } from "@/app/admin/_actions/auth";
 import { AdminNav } from "@/components/admin/admin-nav";
@@ -15,6 +16,7 @@ async function AdminGate({ children }: { children: React.ReactNode }) {
 }
 
 async function SignedInAs() {
+  await connection(); // request-time only: the auth client reads the clock
   const admin = await requireAdmin();
   return <p className="truncate text-xs text-subtle" title={admin.email ?? undefined}>{admin.email}</p>;
 }

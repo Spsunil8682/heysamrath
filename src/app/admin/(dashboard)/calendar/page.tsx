@@ -10,6 +10,9 @@ import { getAllServices, getBusinessToday } from "@/lib/data/admin";
 import { cn } from "@/lib/utils/cn";
 import { formatDateOnly, formatTime } from "@/lib/utils/format";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Calendar" };
 
 type Supabase = Awaited<ReturnType<typeof requireAdmin>>["supabase"];

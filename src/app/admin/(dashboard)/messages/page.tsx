@@ -7,6 +7,9 @@ import { requireAdmin } from "@/lib/auth/admin";
 import { getBusinessToday } from "@/lib/data/admin";
 import { formatDateTime } from "@/lib/utils/format";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Messages" };
 
 export default async function MessagesPage() {

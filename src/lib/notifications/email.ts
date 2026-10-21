@@ -1,4 +1,5 @@
 import "server-only";
+import { getSiteUrl } from "@/lib/env";
 
 /**
  * Optional transactional email. Disabled unless RESEND_API_KEY, EMAIL_FROM and OWNER_NOTIFICATION_EMAIL
@@ -17,7 +18,8 @@ async function send(to: string, subject: string, text: string, replyTo?: string)
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: process.env.EMAIL_FROM, to: [to], subject, text, reply_to: replyTo }),
+      // OWNER_NOTIFICATION_EMAIL may list several addresses separated by commas.
+      body: JSON.stringify({ from: process.env.EMAIL_FROM, to: to.split(",").map((a) => a.trim()).filter(Boolean), subject, text, reply_to: replyTo }),
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return { status: "failed", reason: `Provider responded ${res.status}` };
@@ -46,7 +48,7 @@ export async function notifyOwnerOfBooking(b: {
       `Date:      ${b.eventDate}${b.startTime ? ` at ${b.startTime}` : ""}`,
       `Customer:  ${b.customerName} <${b.customerEmail}>`,
       ``,
-      `Review it in the admin dashboard: /admin/bookings`,
+      `Review it in the admin dashboard: ${getSiteUrl()}/admin/bookings`,
     ].join("\n"),
     b.customerEmail,
   );
