@@ -56,3 +56,14 @@ describe("Cloudinary helpers", () => {
     expect(tileImageUrl({ media_type: "image", media_url: "/media/images/a.jpg", thumbnail_url: null })).toBe("/media/images/a.jpg");
   });
 });
+
+describe("iPhone photos", async () => {
+  const { resolveMedia } = await import("@/lib/media");
+  it("shows Cloudinary HEIC photos as JPEG", () => {
+    expect(resolveMedia("https://res.cloudinary.com/demo/image/upload/v1/portfolio/a.heic")?.url).toBe(
+      "https://res.cloudinary.com/demo/image/upload/v1/portfolio/a.jpg",
+    );
+    expect(resolveMedia("https://res.cloudinary.com/demo/video/upload/v1/portfolio/a.mov")?.url).toMatch(/\.mov$/);
+    expect(resolveMedia("/media/images/a.jpg")?.url).toBe("/media/images/a.jpg");
+  });
+});

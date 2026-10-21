@@ -7,7 +7,7 @@ import { videoPlaybackUrl, videoPosterUrl, resolveMedia } from "@/lib/media";
 import type { PortfolioDisplayItem } from "@/lib/types/database";
 import { formatDateOnly } from "@/lib/utils/format";
 import { MediaImage } from "./media-image";
-import { categoryLabel } from "./portfolio-gallery";
+import { categoryLabel } from "@/lib/config/site";
 
 /** Lightbox for photos and on-demand player for videos (nothing is downloaded until opened). */
 export function PortfolioViewer({

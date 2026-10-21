@@ -3,13 +3,16 @@ import Link from "next/link";
 import { deletePortfolioItem, movePortfolioItem, togglePortfolioFlag } from "@/app/admin/_actions/portfolio";
 import { ActionButton } from "@/components/admin/action-button";
 import { MediaImage } from "@/components/portfolio/media-image";
-import { categoryLabel } from "@/components/portfolio/portfolio-gallery";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/button";
 import { EmptyState, ErrorState } from "@/components/ui/states";
 import { requireAdmin } from "@/lib/auth/admin";
+import { categoryLabel } from "@/lib/config/site";
 import { localLibrary } from "@/lib/data/local-media";
 import { tileImageUrl } from "@/lib/media";
+
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
 
 export const metadata: Metadata = { title: "Portfolio" };
 

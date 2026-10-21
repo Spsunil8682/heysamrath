@@ -10,6 +10,9 @@ import { requireAdmin } from "@/lib/auth/admin";
 import { getAllServices, getBusinessToday } from "@/lib/data/admin";
 import { formatDateOnly, formatDateTime, formatTime, whatsappLink } from "@/lib/utils/format";
 
+/** Admin pages wait for the server-side login check; they are not meant to render instantly. */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Booking" };
 
 export default async function BookingDetailPage({ params }: { params: Promise<{ id: string }> }) {
